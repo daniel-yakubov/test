@@ -80,7 +80,15 @@ def list_all_operations(sess):
         print(op.name)
 
 
+def list_input_output_tensors(sess):
+    """Prints input and output tensors in the model."""
+    print("\n📜 Input and Output Tensors in Model:")
+    for op in sess.graph.get_operations():
+        # Check if the operation is an input or output tensor
+        if ":0" in op.name:  # Tensor names often end in ':0'
+            print(op.name)
+
 if __name__ == "__main__":
     sess, graph = load_model()
-    list_all_operations(sess)  # Print all operations in the model
+    list_input_output_tensors(sess)  # Print input and output tensors only
     sess.close()
