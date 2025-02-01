@@ -2,7 +2,7 @@ import tensorflow as tf
 import numpy as np
 
 # Path to the upgraded model
-MODEL_DIR = "./saved_model"
+MODEL_DIR = "./new_saved_model"
 
 def get_model_signature2(sess):
     """Extracts input and output tensor names."""
@@ -80,15 +80,17 @@ def list_all_operations(sess):
         print(op.name)
 
 
-def list_input_output_tensors(sess):
-    """Prints input and output tensors in the model."""
-    print("\n📜 Input and Output Tensors in Model:")
+def list_relevant_operations(sess):
+    """Prints operations that are likely to correspond to input/output tensors."""
+    relevant_ops = ['input', 'image', 'dense', 'output', 'conv', 'softmax', 'pred', 'logits']
+
+    print("\n📜 Relevant Input and Output Operations:")
     for op in sess.graph.get_operations():
-        # Check if the operation is an input or output tensor
-        if ":0" in op.name:  # Tensor names often end in ':0'
+        if any(relevant in op.name.lower() for relevant in relevant_ops):  # Check if the op name contains relevant keywords
             print(op.name)
 
 if __name__ == "__main__":
     sess, graph = load_model()
-    list_input_output_tensors(sess)  # Print input and output tensors only
+    list_relevant_operations(sess)  # List only relevant operations
     sess.close()
+
