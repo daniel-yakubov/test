@@ -80,17 +80,24 @@ def list_all_operations(sess):
         print(op.name)
 
 
-def list_relevant_operations(sess):
+def list_input_output_operations(sess):
     """Prints operations that are likely to correspond to input/output tensors."""
-    relevant_ops = ['input', 'image', 'dense', 'output', 'conv', 'softmax', 'pred', 'logits']
+    input_keywords = ['input', 'image', 'decode', 'resize']
+    output_keywords = ['output', 'logits', 'predictions', 'dense', 'softmax']
 
-    print("\n📜 Relevant Input and Output Operations:")
+    print("\n📜 Relevant Input Operations:")
     for op in sess.graph.get_operations():
-        if any(relevant in op.name.lower() for relevant in relevant_ops):  # Check if the op name contains relevant keywords
+        if any(keyword in op.name.lower() for keyword in input_keywords):
             print(op.name)
+
+    print("\n📜 Relevant Output Operations:")
+    for op in sess.graph.get_operations():
+        if any(keyword in op.name.lower() for keyword in output_keywords):
+            print(op.name)
+
 
 if __name__ == "__main__":
     sess, graph = load_model()
-    list_relevant_operations(sess)  # List only relevant operations
+    list_input_output_operations(sess)  # List input/output operations only
     sess.close()
 
