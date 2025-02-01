@@ -1,0 +1,16 @@
+import tensorflow as tf
+# For TensorFlow 1.15, use the v1 compatibility mode
+tf.compat.v1.disable_eager_execution()
+# Step 1: Load the saved model from the "saved_model" folder
+with tf.compat.v1.Session() as sess:
+    # Load the model
+    model = tf.compat.v1.saved_model.loader.load(sess, ["serve"], "./saved_model") print("Model loaded successfully!")
+    # Step 2: Get the signature of the model The loaded model contains a signature definition, which gives you access to inputs and outputs
+    signature = model.signature_def['serving_default']
+    
+    # Get input and output tensor names
+    inputs = signature.inputs['input'].name # Replace 'input' with your model's actual input name outputs = signature.outputs['output'].name # Replace 'output' with your 
+    model's actual output name
+    # Step 3: Save the model again in the TensorFlow 1.15 format
+    export_dir = './updated_saved_model' tf.compat.v1.saved_model.simple_save( sess, export_dir,
+        inputs={in
