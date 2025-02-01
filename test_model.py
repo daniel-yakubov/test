@@ -2,7 +2,7 @@ import tensorflow as tf
 import numpy as np
 
 # Path to the upgraded model
-MODEL_DIR = "./new_saved_model"
+MODEL_DIR = "./saved_model"
 
 def get_model_signature2(sess):
     """Extracts input and output tensor names."""
