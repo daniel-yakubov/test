@@ -11,31 +11,6 @@ def get_model_signature(sess):
 
     print("\n📌 Available Signatures:", list(signature.keys()))
 
-    # Try to access "serving_default", else pick the first available signature
-    if "serving_default" in signature:
-        serving_def = signature["serving_default"]
-    elif len(signature) > 0:
-        serving_def = signature[list(signature.keys())[0]]  # Pick first available signature
-        print(f"⚠️ Using alternative signature: {list(signature.keys())[0]}")
-    else:
-        raise ValueError("❌ No valid signature found in the model!")
-
-    # Print input and output details
-    print("\n📌 Model Signature Details:")
-    for input_key, input_tensor in serving_def.inputs.items():
-        print(f"  🔹 Input: {input_key} -> {input_tensor.name}")
-    for output_key, output_tensor in serving_def.outputs.items():
-        print(f"  🔸 Output: {output_key} -> {output_tensor.name}")
-
-    # Extract the first available input/output tensor names
-    input_name = list(serving_def.inputs.values())[0].name if serving_def.inputs else None
-    output_name = list(serving_def.outputs.values())[0].name if serving_def.outputs else None
-
-    if not input_name or not output_name:
-        raise ValueError("❌ Model does not have valid input/output tensors!")
-
-    return input_name, output_name
-
 
 def load_model():
     """Loads the TensorFlow 1.15 model and returns the session and graph."""
