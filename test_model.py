@@ -54,4 +54,4 @@ if __name__ == "__main__":
     # print("input tensor name: ", input_tensor_name, "output tensor name: " , output_tensor_name)
     # run_inference(sess, input_tensor_name, output_tensor_name)
     # sess.close()
-    get_model_signature(sess)
+    # get_model_signature(sess)
