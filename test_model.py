@@ -73,10 +73,14 @@ def run_inference(sess, input_name, output_name):
     predictions = sess.run(output_tensor, feed_dict={input_tensor: dummy_input})
     print("\n✅ Model Inference Output:", predictions)
 
+def list_all_operations(sess):
+    """Prints all operations in the graph to help find input/output tensors."""
+    print("\n📜 All Tensor Operations in Model:")
+    for op in sess.graph.get_operations():
+        print(op.name)
+
+
 if __name__ == "__main__":
     sess, graph = load_model()
-    # input_tensor_name, output_tensor_name = get_model_signature(sess)
-    # print("input tensor name: ", input_tensor_name, "output tensor name: " , output_tensor_name)
-    # run_inference(sess, input_tensor_name, output_tensor_name)
-    # sess.close()
-    get_model_signature2(sess)
+    list_all_operations(sess)  # Print all operations in the model
+    sess.close()
